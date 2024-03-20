@@ -124,25 +124,27 @@ class HBNBCommand(cmd.Cmd):
         """ Create an object of any class"""
         if not args:
             print("** class name missing **")
-            return
         else:
+            # parse arguments to list bt partitioning all spaces
             args = args.split(' ')
             if args[0] not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
             new_instance = HBNBCommand.classes[args[0]]()
             print(new_instance.id)
-            arg = 1
-            while arg < len(args):
-                kw = args[arg].split('=', 1)
+            i = 1
+            while i < len(args):
+                kw = args[i].split('=', 1)
                 if len(kw) <= 1:
                     continue
                 if kw[0] in HBNBCommand.types.keys():
                     try:
                         kw[1] = HBNBCommand.types[kw[0]](kw[1])
-                    except TypeError:
+                    except Exception as e:
+                        print(f"Error: {e}")
                         continue
                 elif kw[1].startswith('\"') and kw[1].endswith('\"'):
+                    escaped = ''
                     for c in kw[1][1:-1]:
                         if c == '\"' or c == '\'':
                             c = '\\'
@@ -152,8 +154,9 @@ class HBNBCommand(cmd.Cmd):
                     kw[1] = escaped
                 else:
                     continue
-                new_instance.__dict__[kw[0]] = kw[1]
-                arg += 1
+                if hasattr(new_instance, kw[0]):
+                    setattr(new_instance, kw[0], kw[1])
+                i += 1
             storage.save()
 
     def help_create(self):
