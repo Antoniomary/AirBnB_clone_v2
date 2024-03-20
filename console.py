@@ -19,16 +19,23 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
-              }
+        'BaseModel': BaseModel,
+        'User': User,
+        'Place': Place,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Review': Review
+    }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
-             'number_rooms': int, 'number_bathrooms': int,
-             'max_guest': int, 'price_by_night': int,
-             'latitude': float, 'longitude': float
-            }
+        'number_rooms': int,
+        'number_bathrooms': int,
+        'max_guest': int,
+        'price_by_night': int,
+        'latitude': float,
+        'longitude': float
+    }
 
     def preloop(self):
         """Prints if isatty is false"""
@@ -118,18 +125,42 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+        else:
+            args = args.split(' ')
+            if args[0] not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+            new_instance = HBNBCommand.classes[args[0]]()
+            print(new_instance.id)
+            arg = 1
+            while arg < len(args):
+                kw = args[arg].split('=', 1)
+                if len(kw) <= 1:
+                    continue
+                if kw[0] in HBNBCommand.types.keys():
+                    try:
+                        kw[1] = HBNBCommand.types[kw[0]](kw[1])
+                    except TypeError:
+                        continue
+                elif kw[1].startswith('\"') and kw[1].endswith('\"'):
+                    for c in kw[1][1:-1]:
+                        if c == '\"' or c == '\'':
+                            c = '\\'
+                        elif c == '_':
+                            c = ' '
+                        escaped += c
+                    kw[1] = escaped
+                else:
+                    continue
+                new_instance.__dict__[kw[0]] = kw[1]
+                arg += 1
+            storage.save()
 
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
-        print("[Usage]: create <className>\n")
+        print("* [Usage]: create <className> <param1> ...\
+                * param syntax: <key name=value>")
 
     def do_show(self, args):
         """ Method to show an individual object """
@@ -187,7 +218,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
