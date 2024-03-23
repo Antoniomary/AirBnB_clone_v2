@@ -8,7 +8,7 @@ from sqlalchemy import Column, String
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
     if getenv("HBNB_TYPE_STORAGE") == 'db':
-        __tablename__ = 'users'
+        __tablename__ = "users"
 
         email = Column(
                 String(128),
@@ -20,11 +20,11 @@ class User(BaseModel, Base):
             )
         first_name = Column(
                 String(128),
-                nullable=False
+                nullable=True
             )
         last_name = Column(
                 String(128),
-                nullable=False
+                nullable=True
             )
     else:
         email = ''
