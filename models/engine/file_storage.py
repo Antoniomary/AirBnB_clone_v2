@@ -11,7 +11,6 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary of objects in storage"""
         if cls:
-            print(cls)
             if type(cls) != str:
                 cls = cls.__name__
             result = {}
