@@ -25,6 +25,7 @@ class State(BaseModel, Base):
             """returns the list of City instances with equal state_id"""
             city = []
             for obj in storage.all().values():
-                if obj["__class__"] == "City" and obj["state_id"] == self.id:
+                d = obj.__dict__
+                if d["__class__"] == "City" and d["state_id"] == self.id:
                     city.append(obj)
             return city
