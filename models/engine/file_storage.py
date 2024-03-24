@@ -13,7 +13,7 @@ class FileStorage:
         if cls:
             result = {}
             for k, v in self.__objects.items():
-                if v['__class__'] == cls:
+                if v.__class__.__name__ == cls:
                     result[k] = v
             return result
         return self.__objects
