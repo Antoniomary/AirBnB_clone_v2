@@ -241,11 +241,7 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            if storage.__class__.__name__ == "DBStorage":
-                objects = storage.all(args).items()
-            else:
-                objects = storage.all().items()
-            for k, v in objects:
+            for k, v in storage.all(args).items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
