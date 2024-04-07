@@ -2,13 +2,13 @@
 # sets up your web servers for the deployment of web_static.
 
 if ! nginx -v; then
-	sudo apt-get update;
-	sudo apt-get -y install nginx;
+	sudo apt-get update
+	sudo apt-get -y install nginx
 fi
 
 if sudo ufw --version; then
 	sudo ufw allow 'Nginx HTTP'
-	sufo ufw allow OpenSSH
+	sufo ufw allow ssh
 fi
 
 sudo mkdir -p /data/web_static/releases/
@@ -20,12 +20,12 @@ echo "
   <head>
   </head>
   <body>
-    Holbermton School
+    Holberton School
   </body>
 </html>
-" | sudo tee data/web_static/releases/test/index.html
+" | sudo tee /data/web_static/releases/test/index.html
 
-ls -sf /data/web_static/releases/test data/web_static/current
+ls -sf /data/web_static/releases/test /data/web_static/current
 
 sudo chown -Rh ubuntu:ubuntu /data
 
