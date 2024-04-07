@@ -39,13 +39,13 @@ exec { 'create_link':
 exec { 'change_owner':
   command  => 'sudo chown -Rh ubuntu:ubuntu /data',
   provider => shell,
-  require  => File['/data/web_static/shared'],
+  require  => File['/data'],
 }
 
 exec { 'add_config':
-  command  => 'sed -i' +
-  '/server_name _;/ a \ \n\tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}' +
-  '/etc/nginx/sites-available/default',
+  command  => 'sed -i ' +
+  '"/server_name _;/ a \ \n\tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}"' +
+  ' /etc/nginx/sites-available/default',
   provider => shell,
   require  => Package['nginx'],
 }
