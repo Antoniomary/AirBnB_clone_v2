@@ -14,17 +14,15 @@ fi
 sudo mkdir -p /data/web_static/shared
 sudo mkdir -p /data/web_static/releases/test
 
-echo "
-<html>
+echo "<html>
   <head>
   </head>
   <body>
     Holberton School
   </body>
-</html>
-" | sudo tee /data/web_static/releases/test/index.html
+</html>" | sudo tee /data/web_static/releases/test/index.html
 
-ls -sf /data/web_static/releases/test /data/web_static/current
+ln -sf /data/web_static/releases/test /data/web_static/current
 
 sudo chown -Rh ubuntu:ubuntu /data
 
