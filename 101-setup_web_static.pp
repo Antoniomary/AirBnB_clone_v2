@@ -9,8 +9,8 @@ exec { 'update':
 }
 
 package { 'nginx':
-  ensure   => present,
-  require  => Exec['update'],
+  ensure  => present,
+  require => Exec['update'],
 }
 
 exec { '/usr/bin/mkdir -p /data/web_static/shared':
