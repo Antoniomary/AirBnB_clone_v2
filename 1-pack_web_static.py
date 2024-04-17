@@ -11,7 +11,7 @@ def do_pack():
     ar = 'web_static_{}.tgz'.format(datetime.now().strftime("%Y%m%d%H%M%S"))
     ar_path = 'versions/' + ar
 
-    res = local('tar -cvfz {} web_static'.format(ar_path))
+    res = local('tar -cvzf {} web_static'.format(ar_path))
 
     if res.succeeded:
         return ar_path
