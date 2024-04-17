@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """a module that defines the do_deploy function"""
-from fabric.api import put, run
+from fabric.api import env, put, run
 from os import path
 
 
