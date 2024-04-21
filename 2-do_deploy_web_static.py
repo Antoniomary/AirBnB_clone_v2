@@ -14,47 +14,35 @@ def do_deploy(archive_path):
     if not path.exists(archive_path):
         return False
 
-    # uploads archive to the /tmp/ directory of the web server
-    r = put(archive_path, '/tmp/')
-    if r.failed:
-        return False
+    try:
+        # uploads archive to the /tmp/ directory of the web server
+        put(archive_path, '/tmp/')
 
-    file = archive_path.split('/')[-1]
-    dir = file[:-4]
+        file = archive_path.split('/')[-1]
+        dir = file[:-4]
 
-    # uncompressing the archive to a new directory on webserver
-    r = run('sudo mkdir -p /data/web_static/releases/{}'.format(dir))
-    if r.failed:
-        return False
-    r = run(f"sudo tar -xzf /tmp/{file} -C /data/web_static/releases/{dir}")
-    if r.failed:
-        return False
+        # uncompressing the archive to a new directory on webserver
+        run('mkdir -p /data/web_static/releases/{}'.format(dir))
 
-    # delete archive from the web server
-    r = run('sudo rm /tmp/{}'.format(file))
-    if r.failed:
-        return False
+        run(f"tar -xzf /tmp/{file} -C /data/web_static/releases/{dir}")
 
-    # move files
-    r = run(f'sudo mv /data/web_static/releases/{dir}/web_static/* \
+        # delete archive from the web server
+        run('rm /tmp/{}'.format(file))
+
+        # move files
+        run(f'mv /data/web_static/releases/{dir}/web_static/* \
 /data/web_static/releases/{dir}')
-    if r.failed:
-        return False
 
-    # delete folder from which files were moved
-    r = run(f'sudo rm -rf /data/web_static/releases/{dir}/web_static')
-    if r.failed:
-        return False
+        # delete folder from which files were moved
+        run(f'rm -rf /data/web_static/releases/{dir}/web_static')
 
-    # delete old symlink
-    r = run('sudo rm -rf /data/web_static/current')
-    if r.failed:
-        return False
+        # delete old symlink
+        run('rm -rf /data/web_static/current')
 
-    # creates a new symbolic link
-    r = run(f"sudo ln -s /data/web_static/releases/{dir} \
+        # creates a new symbolic link
+        run(f"ln -s /data/web_static/releases/{dir} \
 /data/web_static/current")
-    if r.failed:
+    except Exception:
         return False
 
     return True
