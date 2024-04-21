@@ -22,25 +22,25 @@ def do_deploy(archive_path):
         dir = file[:-4]
 
         # uncompressing the archive to a new directory on webserver
-        run('mkdir -p /data/web_static/releases/{}'.format(dir))
+        run('sudo mkdir -p /data/web_static/releases/{}'.format(dir))
 
-        run(f"tar -xzf /tmp/{file} -C /data/web_static/releases/{dir}")
+        run(f"sudo tar -xzf /tmp/{file} -C /data/web_static/releases/{dir}")
 
         # delete archive from the web server
-        run('rm /tmp/{}'.format(file))
+        run('sudo rm /tmp/{}'.format(file))
 
         # move files
-        run(f'mv /data/web_static/releases/{dir}/web_static/* \
+        run(f'sudo mv /data/web_static/releases/{dir}/web_static/* \
 /data/web_static/releases/{dir}')
 
         # delete folder from which files were moved
-        run(f'rm -rf /data/web_static/releases/{dir}/web_static')
+        run(f'sudo rm -rf /data/web_static/releases/{dir}/web_static')
 
         # delete old symlink
-        run('rm -rf /data/web_static/current')
+        run('sudo rm -rf /data/web_static/current')
 
         # creates a new symbolic link
-        run(f"ln -s /data/web_static/releases/{dir} \
+        run(f"sudo ln -s /data/web_static/releases/{dir} \
 /data/web_static/current")
     except Exception:
         return False
