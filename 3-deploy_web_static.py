@@ -18,9 +18,10 @@ def do_pack():
     ar_path = 'versions/' + ar
 
     res = local('tar -cvzf {} web_static'.format(ar_path))
-
     if res.succeeded:
         return ar_path
+
+    return False
 
 
 def do_deploy(archive_path):
@@ -63,6 +64,6 @@ def do_deploy(archive_path):
 def deploy():
     """creates and distributes an archive to a web server"""
     archive_path = do_pack()
-    if archive_path:
+    if archive_path is not False:
         return do_deploy(archive_path)
     return False
