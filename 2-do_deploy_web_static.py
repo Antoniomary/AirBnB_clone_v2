@@ -35,8 +35,24 @@ def do_deploy(archive_path):
     if r.failed:
         return False
 
+    # move files
+    r = run(f'mv /data/web_static/releases/{dir}/web_static/* \
+            /data/web_static/releases/{dir}')
+    if r.failed:
+        return False
+
+    # delete folder from which files were moved
+    r = run(f'rm -rf /data/web_static/releases/{dir}/web_static')
+    if r.failed:
+        return False
+
+    # delete old symlink
+    r = run('rm -rf /data/web_static/current')
+    if r.failed:
+        return False
+
     # creates a new symbolic link
-    r = run(f"ln -sf /data/web_static/releases/{dir} /data/web_static/current")
+    r = run(f"ln -s /data/web_static/releases/{dir} /data/web_static/current")
     if r.failed:
         return False
 
