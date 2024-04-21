@@ -42,7 +42,7 @@ def do_deploy(archive_path):
         # creates a new symbolic link
         run(f"sudo ln -s /data/web_static/releases/{dir} \
 /data/web_static/current")
-    except Exception:
+    except BaseException:
         return False
 
     return True
