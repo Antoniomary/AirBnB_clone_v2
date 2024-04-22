@@ -19,7 +19,7 @@ def hbnb():
 
 
 @app.route("/c/<text>", strict_slashes=False)
-def display_c_text():
+def display_c_text(text):
     """displays C followed by the value of the text"""
     formatted_text = text.replace('_', ' ')
     return 'C ' + formatted_text
