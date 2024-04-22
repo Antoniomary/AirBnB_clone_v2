@@ -40,6 +40,7 @@ def number(n=''):
         return f'{n} is a number'
     abort(404)
 
+
 @app.route("/number_template/<n>", strict_slashes=False)
 def number_template(n=''):
     """display HTML page only if n is an integer"""
