@@ -34,7 +34,7 @@ def python_text(text=""):
 
 
 @app.route("/number/<n>", strict_slashes=False)
-def number():
+def number(n=''):
     """display 'n is a number' only if n is an integer"""
     if n.isdigit():
         return f'{n} is a number'
