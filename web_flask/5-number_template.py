@@ -34,8 +34,15 @@ def python_text(text=""):
 
 
 @app.route("/number/<n>", strict_slashes=False)
-def number():
+def number(n=''):
     """display 'n is a number' only if n is an integer"""
+    if n.isdigit():
+        return f'{n} is a number'
+    abort(404)
+
+@app.route("/number_template/<n>", strict_slashes=False)
+def number_template(n=''):
+    """display HTML page only if n is an integer"""
     if n.isdigit():
         return render_template('5-number.html', n=n)
     abort(404)
