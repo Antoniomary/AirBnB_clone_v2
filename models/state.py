@@ -16,7 +16,6 @@ class State(BaseModel, Base):
                 nullable=False,
             )
 
-        cities = relationship("City", cascade="all, delete", backref="states")
     else:
         name = ""
 
