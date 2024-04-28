@@ -28,6 +28,7 @@ class User(BaseModel, Base):
                 nullable=True
             )
 
+        places = relationship("Place", cascade="all, delete", backref="user")
     else:
         email = ''
         password = ''
