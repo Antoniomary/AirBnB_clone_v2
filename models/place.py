@@ -53,11 +53,6 @@ class Place(BaseModel, Base):
                     nullable=True
                 )
 
-        reviews = relationship(
-                    "Review",
-                    cascade="all, delete",
-                    backref="place"
-                )
     else:
         city_id = ""
         user_id = ""
