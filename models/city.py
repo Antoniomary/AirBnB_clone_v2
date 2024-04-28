@@ -20,6 +20,8 @@ class City(BaseModel, Base):
                 nullable=False
             )
 
+        places = relationship(
+                "Place", cascade="all, delete", backref="cities")
     else:
         state_id = ""
         name = ""
