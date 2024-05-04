@@ -47,14 +47,12 @@ class DBStorage:
         if cls:
             objects = self.__session.query(classes[cls])
             for each in objects:
-                each.__dict__ = each.to_dict()
                 result[cls + '.' + each.id] = each
         else:
             for cls in classes:
                 try:
                     objects = self.__session.query(classes[cls])
                     for each in objects:
-                        each.__dict__ = each.to_dict()
                         result[cls + '.' + each.id] = each
                 except Exception:
                     pass
