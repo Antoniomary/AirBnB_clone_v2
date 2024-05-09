@@ -40,8 +40,8 @@ class BaseModel:
                     kwargs[k] = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
                 elif k == 'created_at':
                     kwargs[k] = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
-                elif k == '__class__':
-                    del kwargs[k]
+            if kwargs.get('__class__'):
+                del kwargs['__class__']
             if not kwargs.get('created_at') and not kwargs.get('updated_at'):
                 kwargs['created_at'] = datetime.now()
                 kwargs['updated_at'] = datetime.now()
