@@ -8,7 +8,7 @@ fi
 
 if sudo ufw --version; then
 	sudo ufw allow 'Nginx HTTP'
-	sufo ufw allow ssh
+	sudo ufw allow ssh
 fi
 
 sudo mkdir -p /data/web_static/shared
