@@ -31,9 +31,11 @@ def do_clean(number=0):
             local(f'rm versions/{archive}')
 
     path = '/data/web_static/releases'
-    archives = run(f"ls -1t {path}")
+    archives = run(f"ls -1t {path}".strip())
     archives = archives.split('\n')
+    if 'test' in archives:
+        archives.remove('test')
     if number == 0:
         number = 1
     for archive in archives[number:]:
-        run('sudo rm -rf {}/{}'.format(path, archive).strip())
+        run('rm -rf {}/{}'.format(path, archive).strip())
