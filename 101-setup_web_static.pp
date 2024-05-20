@@ -45,6 +45,7 @@ exec { 'add_config':
   require  => Package['nginx'],
 }
 
-service { 'nginx':
-  ensure => running,
+exec {'sudo service nginx restart':
+  path     => ['/usr/bin', '/usr/sbin'],
+  provider => shell,
 }
