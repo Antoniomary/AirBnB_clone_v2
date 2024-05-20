@@ -12,11 +12,11 @@ env.key_filename = '~/.ssh/id_rsa'
 def do_clean(number=0):
     """deletes all unnecessary archives"""
     try:
-    	number = int(number)
+        number = int(number)
     except ValueError:
         print("Error: Invalid number")
         exit(1)
-	
+
     if number < 0:
         return
 
@@ -25,12 +25,12 @@ def do_clean(number=0):
     else:
         number += 1
 
-    archives = local('ls -1t /versions/ | tail +{}'.format(number), capture=True)
+    archives = local(f'ls -1t /versions/ | tail +{number}', capture=True)
     for archive in archives.split('\n'):
-	local(f'rm -r {archive}')
+        local(f'rm -r {archive}')
 
     path = '/data/web_static/releases'
     archives = run(f"find {path} -type d -name 'web_static_*' | xargs ls -1t\
                     | tail +{number}")
     for archive in archives.split('\n'):
-	run(f'rm -r {archive}')
+        run(f'rm -r {archive}')
