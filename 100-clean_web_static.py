@@ -21,16 +21,19 @@ def do_clean(number=0):
         exit(1)
 
     if number <= 1:
-        number = 2
+        n = 2
     else:
-        number += 1
+        n = number + 1
 
-    archives = local(f'ls -1t versions/ | tail +{number}', capture=True)
+    archives = local(f'ls -1t versions/ | tail +{n}', capture=True)
     for archive in archives.split('\n'):
         local(f'rm versions/{archive}')
 
     path = '/data/web_static/releases'
-    archives = run(f"find {path} -type d -name 'web_static_*' | xargs ls -1t\
-                    | tail +{number}")
-    for archive in archives.split('\n'):
-        run(f'rm -rf {archive}')
+    archives = run(f"ls -1t {path}")
+    archives = archives.split('\n')
+    archives.remove('test')
+    if number == 0:
+        number = 1
+    for archive in archives[number:]:
+        run(f'rm -rf {path}/{archive}')
