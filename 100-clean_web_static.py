@@ -37,4 +37,4 @@ def do_clean(number=0):
     if number == 0:
         number = 1
     for archive in archives[number:]:
-        run('rm -rf {}/{}'.format(path, archive).strip())
+        run('sudo rm -rf {}/{}'.format(path, archive).strip())
