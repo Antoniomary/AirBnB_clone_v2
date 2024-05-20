@@ -29,7 +29,7 @@ file { '/data/web_static/releases/test/index.html':
   mode    => '0644',
 }
 
-exec { 'ln -sf /data/web_static/releases/test /data/web_static/current':
+exec { 'ln -sfT /data/web_static/releases/test /data/web_static/current':
   path     => ['/usr/bin', '/usr/sbin'],
   provider => shell,
 }
