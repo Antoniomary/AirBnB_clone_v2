@@ -4,7 +4,7 @@ from fabric.api import env, local, run
 from sys import exit
 
 
-env.hosts = ['100.25.155.10', '54.90.5.78']
+# env.hosts = ['100.25.155.10', '54.90.5.78']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
 
@@ -25,5 +25,12 @@ def do_clean(number=0):
     else:
         number += 1
 
-    local('ls -1t versions/ | tail +{} | xargs rm'.format(number))
-    # run('ls -1t /data/web_static/releases | tail +{} | xargs rm'.format(number))
+    archives = local('ls -1t /versions/ | tail +{}'.format(number), capture=True)
+    for archive in archives.split('\n'):
+	local(f'rm -r {archive}')
+
+    path = '/data/web_static/releases'
+    archives = run(f"find {path} -type d -name 'web_static_*' | xargs ls -1t\
+                    | tail +{number}")
+    for archive in archives.split('\n'):
+	run(f'rm -r {archive}')
