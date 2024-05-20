@@ -26,16 +26,16 @@ def do_clean(number=0):
         n = number + 1
 
     archives = local(f'ls -1t versions/ | tail +{n}', capture=True)
-    for archive in archives.split('\n'):
+    for archive in archives.split():
         if archive:
             local(f'rm versions/{archive}')
 
-    path = '/data/web_static/releases'
-    archives = run(f"ls -1t {path}".strip())
-    archives = archives.split('\n')
-    if 'test' in archives:
-        archives.remove('test')
+    path = '/data/web_static/releases/*'
+    archives = run(f"ls -1dt {path}".strip())
+    archives = archives.split()
+    if path[:-1] + 'test' in archives:
+        archives.remove(path[:-1] + 'test')
     if number == 0:
         number = 1
     for archive in archives[number:]:
-        run('rm -rf {}/{}'.format(path, archive).strip())
+        run('rm -rf {}'.format(archive).strip())
