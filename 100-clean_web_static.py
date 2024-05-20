@@ -27,7 +27,8 @@ def do_clean(number=0):
 
     archives = local(f'ls -1t versions/ | tail +{n}', capture=True)
     for archive in archives.split('\n'):
-        local(f'rm versions/{archive}')
+        if archive:
+            local(f'rm versions/{archive}')
 
     path = '/data/web_static/releases'
     archives = run(f"ls -1t {path}")
@@ -36,4 +37,4 @@ def do_clean(number=0):
     if number == 0:
         number = 1
     for archive in archives[number:]:
-        run(f'rm -rf {path}/{archive}')
+        run('rm -rf {}/{}'.format(path, archive).strip())
