@@ -33,7 +33,6 @@ def do_clean(number=0):
     path = '/data/web_static/releases'
     archives = run(f"ls -1t {path}")
     archives = archives.split('\n')
-    archives.remove('test')
     if number == 0:
         number = 1
     for archive in archives[number:]:
