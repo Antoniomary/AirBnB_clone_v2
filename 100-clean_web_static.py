@@ -18,7 +18,7 @@ def do_clean(number=0):
         exit(1)
 
     if number < 0:
-        return
+        exit(1)
 
     if number <= 1:
         number = 2
@@ -27,10 +27,10 @@ def do_clean(number=0):
 
     archives = local(f'ls -1t versions/ | tail +{number}', capture=True)
     for archive in archives.split('\n'):
-        local(f'rm -r {archive}')
+        local(f'rm versions/{archive}')
 
     path = '/data/web_static/releases'
     archives = run(f"find {path} -type d -name 'web_static_*' | xargs ls -1t\
                     | tail +{number}")
     for archive in archives.split('\n'):
-        run(f'rm -r {archive}')
+        run(f'rm -rf {archive}')
