@@ -1,12 +1,26 @@
 #!/usr/bin/python3
 """a module that defines the do_deploy function"""
-from fabric.api import env, put, run
+from fabric.api import local, env, put, run
 from os import path
+from datetime import datetime
 
 
 env.hosts = ['100.25.155.10', '54.90.5.78']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
+
+
+def do_pack():
+    """generates a .tgz archive"""
+    local('mkdir -p versions')
+
+    ar = 'web_static_{}.tgz'.format(datetime.now().strftime("%Y%m%d%H%M%S"))
+    ar_path = 'versions/' + ar
+
+    res = local('tar -cvzf {} web_static'.format(ar_path))
+
+    if res.succeeded:
+        return ar_path
 
 
 def do_deploy(archive_path):
