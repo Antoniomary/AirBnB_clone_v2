@@ -4,11 +4,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewpoint" content="width=device-width, initial-scale=1">
 	<title>AirBnB Clone</title>
-    	<link rel="stylesheet" href="styles/4-common.css">
-	<link rel="stylesheet" href="styles/3-header.css">
-	<link rel="stylesheet" href="styles/3-footer.css">
-	<link rel="stylesheet" href="styles/6-filters.css">
-    	<link rel="icon" href="images/icon.png">
+    	<link rel="stylesheet" href="static/styles/4-common.css">
+	<link rel="stylesheet" href="static/styles/3-header.css">
+	<link rel="stylesheet" href="static/styles/3-footer.css">
+	<link rel="stylesheet" href="static/styles/6-filters.css">
+    	<link rel="icon" href="static/images/icon.png">
     </head>
     <body>
 	<header></header>
@@ -16,7 +16,7 @@
 	    <section class="filters">
 		<div class="locations">
 		    <h3>States</h3>
-		    <h4>&nbsp</h4>
+		    <h4>&nbsp;</h4>
 		    <ul class="popover">
 		    {% for state in states.values()|sort(attribute='name') %}
 			<li>
@@ -32,7 +32,7 @@
 		</div>
 		<div class="amenities">
 		    <h3>Amenities</h3>
-		    <h4>&nbsp</h4>
+		    <h4>&nbsp;</h4>
 		    <ul class="popover">
 		    {% for amenity in amenities.values()|sort(attribute='name') %}
 			<li>{{ amenity.name }}</li>
