@@ -11,8 +11,8 @@ app = Flask(__name__)
 def hbnb_filters():
     """list of all State objects in DBStorage sorted by name (A->Z)"""
     states = storage.all("State")
-    amenities = storage.all("Amenities")
-    return render_template('/10-hbnb_filters.html',
+    amenities = storage.all("Amenity")
+    return render_template('10-hbnb_filters.html',
                             states=states, amenities=amenities)
 
 
