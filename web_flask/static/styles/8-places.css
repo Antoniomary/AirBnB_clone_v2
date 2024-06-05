@@ -29,8 +29,18 @@ article {
 	flex-direction: row;
 	position: relative;
 
-	height: 80px;	
+	min-height: 80px;	
 	width: 100%;
+}
+
+.headline h2{
+	display: flex;
+	flex: 1;
+	justify-content: left;
+	
+	margin-right: 80px;
+	padding-right: 5px;
+        text-align: left;	
 }
 
 .price_by_night {
@@ -39,6 +49,7 @@ article {
 	align-self: flex-end;
 
 	position: absolute;
+	top: 0;
 	right: 0;
 
 	line-height: 60px;
@@ -73,8 +84,9 @@ article {
 }
 
 .user {
-	margin-top: 5px;
-	margin-bottom: 5px;	
+	margin-bottom: 15px;	
+	text-align: left;
+	width: 100%;
 }
 
 .description {
